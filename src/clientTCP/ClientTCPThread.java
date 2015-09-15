@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Created by Dario on 2015-09-08.
+ * Created by bulbatross on 2015-09-15.
  */
 public class ClientTCPThread extends Thread{
 
