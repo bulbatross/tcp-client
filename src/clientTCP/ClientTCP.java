@@ -9,11 +9,15 @@ import java.net.Socket;
 public class ClientTCP {
     private static Socket echoSocket;
     private static int portnr;
+    private static String hostname;
     public static void main(String[] args){
-        portnr= Integer.parseInt(args[1]);
+        //portnr= Integer.parseInt(args[1]);
+        //hostname = args[0];
+        portnr = 7896;
+        hostname = "127.0.0.1";
         try{
 
-            echoSocket = new Socket(args[0], portnr);
+            echoSocket = new Socket(hostname, portnr);
 
 
             ClientTCPListen listener = new ClientTCPListen(echoSocket);
