@@ -10,10 +10,14 @@ public class ClientTCP {
     private static Socket echoSocket;
     private static int portnr;
     public static void main(String[] args){
-        portnr= Integer.parseInt(args[1]);
+
+        //String hostname = args[0];
+        String hostname = "127.0.0.1";
+        //portnr= Integer.parseInt(args[1]);
+        portnr = 7896;
         try{
 
-            echoSocket = new Socket(args[0], portnr);
+            echoSocket = new Socket(hostname, portnr);
 
 
             ClientTCPListen listener = new ClientTCPListen(echoSocket);

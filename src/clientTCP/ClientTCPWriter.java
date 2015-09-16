@@ -28,10 +28,6 @@ public class ClientTCPWriter extends Thread {
             e.printStackTrace();
         }
 
-
-
-
-
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String userInput;
         System.out.print("input: ");
@@ -45,19 +41,15 @@ public class ClientTCPWriter extends Thread {
                 System.out.print ("input: ");
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        out.close();
-
-        try {
-            stdIn.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            echoSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("write thread: " + e.getMessage());
+        } finally {
+            out.close();
+            try {
+                stdIn.close();
+                echoSocket.close();
+            } catch (IOException e) {
+                System.out.println("close write: " + e.getMessage());
+            }
         }
     }
 
