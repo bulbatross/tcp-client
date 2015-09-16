@@ -1,19 +1,22 @@
-package clientTCP;
+package client;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 /**
  * Created by bulbatross on 2015-09-15.
  */
-public class ClientTCPWriter extends Thread{
+public class ClientTCPWriter extends Thread {
 
 
 
     Socket echoSocket;
     PrintWriter out = null;
 
-    public ClientTCPWriter(Socket socket)throws IOException{
+    public ClientTCPWriter(Socket socket)throws IOException {
         echoSocket = socket;
     }
 
