@@ -28,24 +28,30 @@ public class ClientTCPListen extends Thread {
             e.printStackTrace();
         }
 
-        String msg;
+
         try {
-            while (( msg = in.readLine()) != null)
+            while (( in.readLine()) != null)
             {
-                System.out.println("echo: " + msg);
+                try {
+                    System.out.println("echo: " + in.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         } catch (IOException e) {
-            //e.printStackTrace();
-            //close
-            System.out.println("read line" + e.getMessage());
-        }finally {
-            try {
-                in.close();
-                echoSocket.close();
-            } catch (IOException e) {
-                System.out.println("close connection: " + e.getMessage());
-            }
+            e.printStackTrace();
+        }
+        try {
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            echoSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

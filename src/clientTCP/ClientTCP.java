@@ -15,12 +15,11 @@ public class ClientTCP {
 
             echoSocket = new Socket(args[0], portnr);
 
+
             ClientTCPListen listener = new ClientTCPListen(echoSocket);
             listener.start();
-
             ClientTCPWriter writer = new ClientTCPWriter(echoSocket);
             writer.start();
-
         }catch(IOException e){
             e.printStackTrace();
         }
