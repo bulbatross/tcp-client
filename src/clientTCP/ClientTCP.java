@@ -20,10 +20,10 @@ public class ClientTCP {
             echoSocket = new Socket(hostname, portnr);
 
 
-            ClientTCPListen listener = new ClientTCPListen(echoSocket);
-            listener.start();
-            ClientTCPWriter writer = new ClientTCPWriter(echoSocket);
+            writer = new ClientTCPWriter(echoSocket);
             writer.start();
+            listener = new ClientTCPListen(echoSocket,writer);
+            listener.start();
         }catch(IOException e){
             e.printStackTrace();
         }
