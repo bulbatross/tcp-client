@@ -1,7 +1,9 @@
 package clientTCP;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * Created by bulbatross on 2015-09-15.
@@ -24,8 +26,13 @@ public class ClientTCP {
             listener.start();
             ClientTCPWriter writer = new ClientTCPWriter(echoSocket);
             writer.start();
+        } catch (ConnectException e) {
+            System.err.println("It seems like the server is not running: " + hostname);
+            System.exit(1);
         }catch(IOException e){
-            e.printStackTrace();
+            System.err.println("Couldn't get I/O for the connection to " +
+                    hostname);
+            System.exit(1);
         }
     }
 }

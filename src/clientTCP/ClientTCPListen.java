@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by bulbatross on 2015-09-15.
@@ -35,8 +36,11 @@ public class ClientTCPListen extends Thread {
                 System.out.println("echo: " + msg);
 
             }
-        } catch (IOException e) {
-            System.out.println("Problem when reading from server: "+ e.getMessage());
+        } catch(SocketException e){
+            System.err.println("Server error!");
+            //close all
+        }catch (IOException e) {
+            System.out.println("Problem when reading: "+ e.getMessage());
         } finally {
             try {
                 in.close();
