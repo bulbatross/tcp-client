@@ -13,11 +13,14 @@ public class ClientTCPListen extends Thread {
 
 
     private Socket echoSocket;
+    private ClientTCPWriter otherThread;
 
-
-    public ClientTCPListen(Socket socket)throws IOException {
+    public ClientTCPListen(Socket socket, ClientTCPWriter thread)throws IOException {
+        super();
         echoSocket = socket;
+        this.otherThread=thread;
     }
+
 
     public void run() {
 
@@ -31,23 +34,25 @@ public class ClientTCPListen extends Thread {
 
         String msg;
         try {
-            while (( msg = in.readLine()) != null)
+            while (( msg = in.readLine()) != null && !Thread.currentThread().isInterrupted())
             {
                 System.out.println("echo: " + msg);
-
+                System.out.print("input: ");
             }
         } catch(SocketException e){
             System.err.println("Server error!");
             //close all
-        }catch (IOException e) {
-            System.out.println("Problem when reading: "+ e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Problem when reading from server: " + e.getMessage());
         } finally {
+            otherThread.interrupt();
             try {
                 in.close();
                 echoSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
 }

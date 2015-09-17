@@ -22,10 +22,11 @@ public class ClientTCP {
             echoSocket = new Socket(hostname, portnr);
 
 
-            ClientTCPListen listener = new ClientTCPListen(echoSocket);
-            listener.start();
             ClientTCPWriter writer = new ClientTCPWriter(echoSocket);
             writer.start();
+
+            ClientTCPListen listener = new ClientTCPListen(echoSocket,writer);
+            listener.start();
         } catch (ConnectException e) {
             System.err.println("It seems like the server is not running: " + hostname);
             System.exit(1);

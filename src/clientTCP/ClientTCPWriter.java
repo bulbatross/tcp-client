@@ -15,9 +15,12 @@ public class ClientTCPWriter extends Thread {
 
     Socket echoSocket;
     PrintWriter out = null;
+    //private ClientTCPListen otherThread;
 
     public ClientTCPWriter(Socket socket)throws IOException {
+        super();
         echoSocket = socket;
+        //this.otherThread=thread;
     }
 
     public void run(){
@@ -30,26 +33,31 @@ public class ClientTCPWriter extends Thread {
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String userInput;
-        System.out.print("input: ");
+        
         try {
-            while ((userInput = stdIn.readLine()) != null)
+            while ((userInput = stdIn.readLine()) != null && !Thread.currentThread().isInterrupted())
             {
                 out.println(userInput);
+
                 if (userInput.equals("/quit"))
                     break;
 
-                System.out.print ("input: ");
+                
+
             }
         } catch (IOException e) {
             System.out.println("write thread: " + e.getMessage());
+
         } finally {
             out.close();
+            //otherThread.interrupt();
             try {
                 stdIn.close();
                 echoSocket.close();
             } catch (IOException e) {
                 System.out.println("close write: " + e.getMessage());
             }
+
         }
     }
 
