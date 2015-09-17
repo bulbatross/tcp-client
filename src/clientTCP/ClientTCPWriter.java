@@ -33,7 +33,7 @@ public class ClientTCPWriter extends Thread {
 
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String userInput;
-        System.out.print("input: ");
+        
         try {
             while ((userInput = stdIn.readLine()) != null && !Thread.currentThread().isInterrupted())
             {
@@ -42,7 +42,7 @@ public class ClientTCPWriter extends Thread {
                 if (userInput.equals("/quit"))
                     break;
 
-                System.out.print ("input: ");
+                
 
             }
         } catch (IOException e) {
