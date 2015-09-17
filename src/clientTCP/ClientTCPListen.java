@@ -36,6 +36,7 @@ public class ClientTCPListen extends Thread {
             while (( msg = in.readLine()) != null && !Thread.currentThread().isInterrupted())
             {
                 System.out.println("echo: " + msg);
+                System.out.print("input: ");
             }
         } catch (IOException e) {
             System.out.println("Problem when reading from server: " + e.getMessage());
