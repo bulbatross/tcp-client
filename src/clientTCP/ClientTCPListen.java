@@ -34,18 +34,18 @@ public class ClientTCPListen extends Thread {
 
         String msg;
         try {
-            while (( msg = in.readLine()) != null && !Thread.currentThread().isInterrupted())
+            while (( msg = in.readLine()) != null)
             {
-                System.out.println("echo: " + msg);
-                System.out.print("input: ");
+                    msg = sanitazeString(msg);
+                    System.out.println("echo: " + msg);
+                    System.out.print("input: ");
             }
         } catch(SocketException e){
-            System.err.println("Server error!");
-            //close all
+            System.out.println("Connection closed!");
         } catch (IOException e) {
             System.out.println("Problem when reading from server: " + e.getMessage());
         } finally {
-            otherThread.interrupt();
+            otherThread.close();
             try {
                 in.close();
                 echoSocket.close();
@@ -54,5 +54,17 @@ public class ClientTCPListen extends Thread {
             }
 
         }
+    }
+
+    protected String sanitazeString(String msg){
+        if(msg.contains("<#>")){
+            String[] tmp = msg.split("<#>");
+            String sanitazedString = "";
+            for(int i = 0; i < tmp.length; i++){
+                sanitazedString += "\n" +tmp[i];
+            }
+            return sanitazedString;
+        } else
+            return msg;
     }
 }

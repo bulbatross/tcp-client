@@ -11,16 +11,14 @@ import java.net.Socket;
  */
 public class ClientTCPWriter extends Thread {
 
-
-
-    Socket echoSocket;
-    PrintWriter out = null;
-    //private ClientTCPListen otherThread;
+    private Socket echoSocket;
+    private PrintWriter out = null;
+    private boolean done;
 
     public ClientTCPWriter(Socket socket)throws IOException {
         super();
+        done = false;
         echoSocket = socket;
-        //this.otherThread=thread;
     }
 
     public void run(){
@@ -35,34 +33,32 @@ public class ClientTCPWriter extends Thread {
         String userInput;
         
         try {
-            while ((userInput = stdIn.readLine()) != null && !Thread.currentThread().isInterrupted())
+            while (!done)
             {
-                out.println(userInput);
-
-                if (userInput.equals("/quit"))
-                    break;
-
-                
-
+                if(stdIn.ready()) {
+                    userInput = stdIn.readLine();
+                    if(userInput != null){
+                        if (userInput.equals("/quit"))
+                            break;
+                        else
+                            out.println(userInput);
+                    }
+                }
             }
         } catch (IOException e) {
             System.out.println("write thread: " + e.getMessage());
-
         } finally {
             out.close();
-            //otherThread.interrupt();
             try {
                 stdIn.close();
                 echoSocket.close();
             } catch (IOException e) {
                 System.out.println("close write: " + e.getMessage());
             }
-
         }
     }
 
-
-
-
-
+    public void close(){
+        done = true;
+    }
 }

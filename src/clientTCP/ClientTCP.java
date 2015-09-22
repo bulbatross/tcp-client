@@ -13,10 +13,13 @@ public class ClientTCP {
     private static int portnr;
     public static void main(String[] args){
 
-        //String hostname = args[0];
-        String hostname = "127.0.0.1";
-        //portnr= Integer.parseInt(args[1]);
-        portnr = 7896;
+        if(args.length < 2){
+            return;
+        }
+        String hostname = args[0];
+        //String hostname = "127.0.0.1";
+        portnr= Integer.parseInt(args[1]);
+        //portnr = 7896;
         try{
 
             echoSocket = new Socket(hostname, portnr);
